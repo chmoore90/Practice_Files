@@ -1,2 +1,9 @@
-# exercise 1
+# exercise 1. Charactor input.
+
+#base. Ask a user for name and age, then print a message with that info.
+
+name = input("Enter your name: ")
+age = input("Enter your age: ")
+
+print(f"Hello {name}! You are {age} years old."
 
