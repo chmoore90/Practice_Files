@@ -1,4 +1,3 @@
-# hello-world
-INFM 109
+# Python Practice
 
-This is where my journey into data science begins!
+Pretty self explanatory.
