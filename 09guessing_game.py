@@ -30,7 +30,6 @@ while True:
         print(f"It took you {guess_count} guesses.")
         if guess_count not in scores:
             scores.append(guess_count)
-            print(scores)
         play_again = input("Would you like to play again? Type 'exit' to end. ")
         if play_again != "exit":
             num = random.randint(1,100)
