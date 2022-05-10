@@ -1,3 +1,6 @@
+import random
+import secrets
+
 plays = {
     "rock": {
         "rock": "It's a tie!",
@@ -17,8 +20,6 @@ plays = {
 }
 
 while True:
-    import random
-    import secrets
 
     player = input("Make your move: ")
     if player not in plays:
@@ -26,4 +27,5 @@ while True:
         continue
 
     computer = random.choice(list(plays.keys()))
+    print(f"Computer: {computer}; Player: {player}")
     print(plays[computer][player])
