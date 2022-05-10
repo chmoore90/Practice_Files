@@ -20,8 +20,8 @@ a.clear()
 b.clear()
 c.clear()
 
-size1 = int(input("How long should list A be?"))
-size2 = int(input("How long should list B be?"))
+size1 = int(input("How long should list A be? "))
+size2 = int(input("How long should list B be? "))
 
 a = [random.randint(0,100) for x in range(size1)]
 print(a)
@@ -37,4 +37,7 @@ print(c)
 
 # Extra 2: Write this in one line of Python
 
-# ??
+c.clear()
+
+c = [x for x in a if x in b]
+print(c)
