@@ -18,11 +18,12 @@ plays = {
 
 while True:
     import random
+    import secrets
 
     player = input("Make your move: ")
     if player not in plays:
         print("Invalid input. Try again.")
         continue
 
-    computer = plays[random.choice(len(plays))]
-    print(computer)
+    computer = random.choice(list(plays.keys()))
+    print(plays[computer][player])
