@@ -5,9 +5,8 @@ a = [5, 10, 15, 20, 25]
 b = []
 
 def first_and_last(*list):
-    list_length = len(a)
     b.append(a[0])
-    b.append(a[list_length-1])
+    b.append(a[-1])
 
 first_and_last(a,b)
 print(b)
