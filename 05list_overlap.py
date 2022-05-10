@@ -34,3 +34,7 @@ for x in a:
     if x in b:
         c.append(x)
 print(c)
+
+# Extra 2: Write this in one line of Python
+
+# ??
