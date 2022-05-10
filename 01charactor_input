@@ -1,7 +1,7 @@
 # Exercise 1. Charactor Input.
 
-#base question. Ask a user for name and age, then print a message with that info.
-#      Also print a message with the year they will turn 100.
+# Base exercise: Ask a user for name and age, then print a message with that info.
+# Then, print a message with the year they will turn 100.
 
 
 name = input("Enter your name: ")
@@ -13,5 +13,11 @@ year_onehundred = current_year - int(age) + 100
 print(f"Hello {name}! You are {age} years old.")
 print(f"You will turn 100 in the year {year_onehundred}.")
 
+# Extras: Add on to the previous program by asking the user for another number and
+# printing out that many copies of the previous message.
 
-#Extras
+repeats = int(input("How many repeats? "))
+
+for x in range(repeats):
+    print(f"Hello {name}! You are {age} years old.")
+    print(f"You will turn 100 in the year {year_onehundred}.")
