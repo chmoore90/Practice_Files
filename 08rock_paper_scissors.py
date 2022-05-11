@@ -1,5 +1,4 @@
 import random
-import secrets
 
 plays = {
     "rock": {
@@ -23,7 +22,7 @@ while True:
 
     player = input("Make your move: ")
     if player not in plays:
-        print("Invalid input. Try again.")
+        print("Invalid input. Enter 'rock', 'paper', or 'scissors'.")
         continue
 
     computer = random.choice(list(plays.keys()))
