@@ -21,4 +21,4 @@ def gen_rand_list(n, list):
 a = gen_rand_list(n, rand_list)
 
 print(a)
-print(remove_doubles(sorted(a)))
+print(remove_doubles(a))
