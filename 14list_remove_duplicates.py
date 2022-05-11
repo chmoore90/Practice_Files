@@ -1,10 +1,13 @@
 # Write a program (function!) that takes a list and returns a new list that contains all the elements
 # of the first list minus all the duplicates.
 
+# Extra 1a: Write two different functions to do this - one using a loop and constructing a list...
+
 import random
 no_doubles = []
 rand_list = []
 n = 15
+
 def remove_doubles(*list):
     for x in a:
         if x not in no_doubles:
@@ -22,3 +25,9 @@ a = gen_rand_list(n, rand_list)
 
 print(a)
 print(remove_doubles(a))
+
+
+# Extra 1b: ...and another using sets.
+
+b = set(a)
+print(b)
