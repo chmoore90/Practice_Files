@@ -3,10 +3,10 @@
 
 # # Extra 1a: Write two different functions to do this - one using a loop and constructing a list...
 
-# import random
+import random
 # no_doubles = []
 # rand_list = []
-# n = 15
+# size = 15
 
 # def remove_doubles(*list):
 #     for x in a:
@@ -16,12 +16,12 @@
 #             continue
 #     return no_doubles
 
-# def gen_rand_list(n, list):
-#     for x in range(n):
+# def gen_rand_list(size, list):
+#     for x in range(size):
 #         list.append(random.randint(1,10))
 #     return list
 
-# a = gen_rand_list(n, rand_list)
+# a = gen_rand_list(size, rand_list)
 
 # print(a)
 # print(remove_doubles(a))
@@ -37,19 +37,26 @@
 # "Take two lists and write a program that returns a list that contains only the elements that are common between the lists
 # (without duplicates). Make sure your program works on two lists of different sizes."
 
-import random
 
 x = set()
 y = set()
 z = set()
 
-size1 = int(input("How long should set X be? "))
-size2 = int(input("How long should set Y be? "))
+size1 = 20
+size2 = 15
 
-def gen_rand_set():
+def gen_rand_set(set: set):
+    for _ in range(size1):
+        set.add(random.randint(1,30))
+    return set
 
-
-x = set.add(random.sample(range(0,100), size1))
+x = gen_rand_set(x)
 print(x)
-y = set([random.sample(range(0,100), size2)])
+y = gen_rand_set(y)
 print(y)
+
+z = x.intersection(y)
+print(z)
+
+x.intersection_update(y)
+print(x)
