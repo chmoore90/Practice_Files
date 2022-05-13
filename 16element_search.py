@@ -26,3 +26,21 @@ if num in rand_list:
     print(f"Yes, {num} is in the list.")
 else:
     print(f"Sorry, {num} is not listed.")
+
+# Extra 1: Use binary search
+
+def binary_search(num, list):
+    list_length = len(list)
+    for x in range(list_length):
+        if list[x] != num:
+            continue
+        else:
+            return True
+    return False
+
+result = binary_search(num, rand_list)
+
+if result is True:
+    print(f"Yes, {num} is in the list.")
+else:
+    print(f"Sorry, {num} is not listed.")
