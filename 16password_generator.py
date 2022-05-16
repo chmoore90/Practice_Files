@@ -6,14 +6,14 @@ import string
 import secrets
 import requests
 
-# def get_size():
-#     return int(input("Enter desired password length: "))
+def get_size():
+    return int(input("Enter desired password length: "))
 
-# size = get_size()
-# alphabet = string.ascii_letters + string.digits + string.punctuation
-# password = ''.join(secrets.choice(alphabet) for _ in range(size))
+size = get_size()
+alphabet = string.ascii_letters + string.digits + string.punctuation
+password = ''.join(secrets.choice(alphabet) for _ in range(size))
 
-# print(password)
+print(password)
 
 # Ask the user how strong they want their password to be. For weak passwords, pick a word or two from a list.
 
@@ -28,7 +28,7 @@ def gen_password ():
     if strength == "weak":
         return gen_weak()
     if strength == "medium":
-        return gen_med()
+        return gen_medium()
     if strength == "strong":
         return gen_strong()
 
@@ -38,6 +38,7 @@ def gen_word_list():
     response = requests.get(word_site)
     full_list = response.content.splitlines()
     full_list = [x.decode("utf-8") for x in full_list]
+
     for y in range(len(full_list)):
         if len(full_list[y]) >= min_word_length:
             word_list.append(full_list[y])
@@ -53,21 +54,32 @@ def gen_weak():
 
 def gen_medium():
     chars = input("Use letters or words? ")
+
     if chars == "letters":
         pass_length = int(input("How many characters? "))
-        components = string.ascii_letters + string.digits
-        med_pass = ''.join(secrets.choice(components) for _ in pass_length)
+        components = string.ascii_letters
+        med_pass = ''.join(secrets.choice(components) for _ in range(pass_length))
 
         return med_pass
 
     elif chars == "words":
         pass_length = int(input("How many words? "))
-        words = [words.append(secrets.choice(word_list)) for _ in pass_length]
-        for x in range (0, pass_length, 2):
+        med_list = []
+        for x in range(pass_length):
+            med_list.append(secrets.choice(word_list))
+        for x in range (0, pass_length*2, 2):
+            digit = secrets.choice(string.digits)
+            med_list.insert(x, digit)
+        med_pass = ''.join(med_list)
 
+        return med_pass
 
+def gen_strong():
+    size = int(input("Password length? "))
+    components = string.ascii_letters + string.digits + string.punctuation
+    strong_pass = ''.join(secrets.choice(components) for _ in range(size))
 
-
+    return strong_pass
 
 
 password = gen_password()
