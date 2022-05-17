@@ -9,9 +9,10 @@ from bs4 import BeautifulSoup
 base_url = "http://www.vanityfair.com/society/2014/06/monica-lewinsky-humiliation-culture"
 r = requests.get(base_url)
 
-soup = BeautifulSoup(r.text, 'html.parser')
-article = soup.find("article")
-texts = article.find_all(".article__body")
+soup = BeautifulSoup(r.content, 'html.parser')
 
+article_main = soup.find(class_='article main-content')
+para_div = article_main.find_all('p')
 
-print(texts)
+for para in para_div:
+    print(para.text)
