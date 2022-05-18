@@ -47,6 +47,12 @@ with open("SUNlist.txt", "w") as sun_write:
 # Begin exercise:
 
 with open("SUNlist.txt", "r") as sun_read:
-    sun_text = sun_read.read()
-
-print(sun_text)
+    cat_count = {}
+    line = sun_read.readline()[3:-26]
+    while line:
+        if line in cat_count:
+            cat_count[line] += 1
+        elif line not in cat_count:
+            cat_count[line] = 1
+        line = sun_read.readline()[3:-26]
+    print(cat_count)
