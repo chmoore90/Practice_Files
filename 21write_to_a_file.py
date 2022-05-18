@@ -17,10 +17,15 @@ title_list_set = [soup.find_all("h3")]
 
 # New code:
 
-with open("NY_titles.txt", "w") as NY_titles:
+with open(input("NY_titles.txt"), "w") as NY_titles:
 
     for title_set in title_list_set:
         for title in title_set:
             title_string = str(title.get_text())
             NY_titles.write(title_string)
             NY_titles.write("\n")
+
+
+# Extra 1: Ask the user to specify the name of the output file that will be saved.
+# with open(input("Enter file name: "), "w") as NY_titles:
+#     etc.
