@@ -22,8 +22,8 @@ def create_board(x, y):
         return board
 
 
-columns = int(input("Enter number of columns: "))
-rows = int(input("Enter number of rows: "))
+columns = 3
+rows = 3
 
 b = create_board(columns, rows)
 

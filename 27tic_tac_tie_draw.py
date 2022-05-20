@@ -2,13 +2,11 @@
 # ask the user for a coordinate of where they want to place their piece.
 
 
-
-reset = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-game = reset
+game = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
 
 
 def top(game):
-    return f" --- --- ---\n| {game[0][0]} | {game[0][1]} | {game[0][2]} |"
+    return f" --- --- ---\n| {game[2][0]} | {game[2][1]} | {game[2][2]} |"
 
 
 def top_start():
@@ -16,7 +14,7 @@ def top_start():
 
 
 def mid(game):
-    return f"\n --- --- ---\n| () | {game[1][1]} | {game[1][2]} |"
+    return f"\n --- --- ---\n| {game[1][0]} | {game[1][1]} | {game[1][2]} |"
 
 
 def mid_start():
@@ -24,7 +22,7 @@ def mid_start():
 
 
 def bot(game):
-    return f"\n --- --- ---\n| {game[2][0]} | {game[2][1]} | {game[2][2]} |"
+    return f"\n --- --- ---\n| {game[0][0]} | {game[0][1]} | {game[0][2]} |"
 
 
 def bot_start():
@@ -34,43 +32,59 @@ def bot_start():
 def draw(game):
     return "".join(list((top(game), mid(game), bot(game))))
 
-game_board = {
-    ""
-}
 
 
-# def welcome():
-#     print(
-#         "Welcome to Chloe's Tic Tac Toe!\nThe game board uses (x,y) coordinates as input to place your markers:"
-#     )
-#     print(
-#         "".join(
-#             list(
-#                 [
-#                     top_start(),
-#                     mid_start(),
-#                     bot_start(),
-#                     "\n      ----- ----- -----",
-#                     "\nX:      1     2     3",
-#                 ]
-#             )
-#         )
-#     )
-#     print("Enter your coordinates as 'x,y'. Don't include any spaces or parentheses.")
+def welcome():
+    print(
+        "Welcome to Chloe's Tic Tac Toe!\nThe game board uses (x,y) coordinates as input to place your markers."
+    )
+    print("Enter your coordinates as 'x,y'. Don't include any spaces or parentheses.")
+    print(
+        "".join(
+            list(
+                [
+                    top_start(),
+                    mid_start(),
+                    bot_start(),
+                    "\n      ----- ----- -----",
+                    "\nX:      1     2     3",
+                ]
+            )
+        )
+    )
 
 
-# welcome()
+welcome()
 
-# ready = input("Are you ready to play? (Type XXX to exit) ")
-# while ready != "XXX":
-#     pass
-
-
-def play():
-    coors = input("Enter your coordinates: ")
-    coorl = coors.split(',')
-    x = coorl[0]
-    y = coorl[1]
-    print(x,y)
-
-play()
+ready = input("Are you ready to play? (Type XXX to exit) ")
+ready = "yes"
+while ready != "XXX":
+    turn = "p1"
+    while turn == "p1":
+        coors = input("Player 1's turn. Enter your coordinates: ")
+        coorl = coors.split(",")
+        x = int(coorl[0])
+        y = int(coorl[1])
+        if x > 3 or x < 1:
+            coors = input("X is an invalid number. Try again: ")
+        if y > 3 or y < 1:
+            coors = input("Y is an invalid number. Try again: ")
+        if game[y-1][x-1] == "O":
+            coors = input("Your opponent is occupying this spot! Try again: ")
+        game[(y - 1)][(x - 1)] = "X"
+        print(draw(game))
+        turn = "p2"
+    while turn == "p2":
+        coors = input("Player 2's turn. Enter your coordinates: ")
+        coorl = coors.split(",")
+        x = int(coorl[0])
+        y = int(coorl[1])
+        if x > 3 or x < 1:
+            coors = input("X is an invalid number. Try again: ")
+        if y > 3 or y < 1:
+            coors = input("Y is an invalid number. Try again: ")
+        if game[(y-1)][(x-1)] == "X":
+            coors = input("Your opponent is occupying this spot! Try again: ")
+        game[(y - 1)][x - 1] = "O"
+        print(draw(game))
+        turn = "p1"
