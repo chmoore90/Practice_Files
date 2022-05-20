@@ -2,7 +2,7 @@
 # ask the user for a coordinate of where they want to place their piece.
 
 
-game = [["1", "2", "3"], ["4", "5", "6"], ["7", "8", "9"]]
+game = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 
 
 def top(game):
@@ -33,7 +33,6 @@ def draw(game):
     return "".join(list((top(game), mid(game), bot(game))))
 
 
-
 def welcome():
     print(
         "Welcome to Chloe's Tic Tac Toe!\nThe game board uses (x,y) coordinates as input to place your markers."
@@ -56,7 +55,7 @@ def welcome():
 
 welcome()
 
-ready = input("Are you ready to play? (Type XXX to exit) ")
+ready = input("Are you ready to play? (Type XXX at any time to exit) ")
 ready = "yes"
 while ready != "XXX":
     turn = "p1"
@@ -66,11 +65,14 @@ while ready != "XXX":
         x = int(coorl[0])
         y = int(coorl[1])
         if x > 3 or x < 1:
-            coors = input("X is an invalid number. Try again: ")
+            print("X is an invalid number. Try again.")
+            continue
         if y > 3 or y < 1:
-            coors = input("Y is an invalid number. Try again: ")
-        if game[y-1][x-1] == "O":
-            coors = input("Your opponent is occupying this spot! Try again: ")
+            print("Y is an invalid number. Try again.")
+            continue
+        if game[y - 1][x - 1] == "O":
+            print("Your opponent is occupying this spot! Try again.")
+            continue
         game[(y - 1)][(x - 1)] = "X"
         print(draw(game))
         turn = "p2"
@@ -80,11 +82,14 @@ while ready != "XXX":
         x = int(coorl[0])
         y = int(coorl[1])
         if x > 3 or x < 1:
-            coors = input("X is an invalid number. Try again: ")
+            print("X is an invalid number. Try again.")
+            continue
         if y > 3 or y < 1:
-            coors = input("Y is an invalid number. Try again: ")
-        if game[(y-1)][(x-1)] == "X":
-            coors = input("Your opponent is occupying this spot! Try again: ")
+            print("Y is an invalid number. Try again.")
+            continue
+        if game[(y - 1)][(x - 1)] == "X":
+            print("Your opponent is occupying this spot! Try again.")
+            continue
         game[(y - 1)][x - 1] = "O"
         print(draw(game))
         turn = "p1"
