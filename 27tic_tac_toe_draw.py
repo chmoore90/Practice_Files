@@ -2,7 +2,9 @@
 # ask the user for a coordinate of where they want to place their piece.
 
 
-game = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+
+reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+game = reset
 
 
 def top(game):
@@ -18,7 +20,7 @@ def mid(game):
 
 
 def mid_start():
-    return f"\n      ----- ----- -----\nY: 2 |(2,1)|(2,2)|(3,2)|"
+    return f"\n      ----- ----- -----\nY: 2 |(1,2)|(2,2)|(3,2)|"
 
 
 def bot(game):
@@ -60,35 +62,41 @@ ready = "yes"
 while ready != "XXX":
     turn = "p1"
     while turn == "p1":
-        coors = input("Player 1's turn. Enter your coordinates: ")
-        coorl = coors.split(",")
-        x = int(coorl[0])
-        y = int(coorl[1])
+        coord_in = input("Player 1's turn. Enter your coordinates: ")
+        coords = coord_in.split(",")
+        x = int(coords[0])
+        y = int(coords[1])
         if x > 3 or x < 1:
-            print("X is an invalid number. Try again.")
+            print("Invalid number. X must be a 1, 2, or 3.")
             continue
         if y > 3 or y < 1:
-            print("Y is an invalid number. Try again.")
+            print("Invalid number. Y must be a 1, 2, or 3.")
             continue
         if game[y - 1][x - 1] == "O":
-            print("Your opponent is occupying this spot! Try again.")
+            print("Your opponent is occupying this spot!")
+            continue
+        elif game[y-1][x-1] == "X":
+            print("You already placed an X here.")
             continue
         game[(y - 1)][(x - 1)] = "X"
         print(draw(game))
         turn = "p2"
     while turn == "p2":
-        coors = input("Player 2's turn. Enter your coordinates: ")
-        coorl = coors.split(",")
-        x = int(coorl[0])
-        y = int(coorl[1])
+        coord_in = input("Player 2's turn. Enter your coordinates: ")
+        coords = coord_in.split(",")
+        x = int(coords[0])
+        y = int(coords[1])
         if x > 3 or x < 1:
-            print("X is an invalid number. Try again.")
+            print("Invalid number. X must be a 1, 2, or 3.")
             continue
         if y > 3 or y < 1:
-            print("Y is an invalid number. Try again.")
+            print("Invalid number. Y must be a 1, 2, or 3.")
             continue
         if game[(y - 1)][(x - 1)] == "X":
-            print("Your opponent is occupying this spot! Try again.")
+            print("Your opponent is occupying this spot!")
+            continue
+        elif game[y - 1][x - 1] == "O":
+            print("You already placed an O here.")
             continue
         game[(y - 1)][x - 1] = "O"
         print(draw(game))
