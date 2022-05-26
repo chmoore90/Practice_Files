@@ -4,20 +4,24 @@ reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 game = reset
 
 
-def top(game):
-    return f" --- --- ---\n| {game[2][0]} | {game[2][1]} | {game[2][2]} |"
+def top(row):
+    return f" --- --- ---\n| {row[0]} | {row[1]} | {row[2]} |"
 
 
-def mid(game):
-    return f"\n --- --- ---\n| {game[1][0]} | {game[1][1]} | {game[1][2]} |"
+def mid(row):
+    return f"\n --- --- ---\n| {row[0]} | {row[1]} | {row[2]} |"
 
 
-def bot(game):
-    return f"\n --- --- ---\n| {game[0][0]} | {game[0][1]} | {game[0][2]} |"
+def bot(row):
+    return f"\n --- --- ---\n| {row[0]} | {row[1]} | {row[2]} |"
 
 
-def draw(game):
-    return "".join(list((top(game), mid(game), bot(game))))
+def draw(turns_taken):
+    for turn in turns_taken:
+        x, y = turn["coords"]
+        game[y - 1][x - 1] = player_marks[turn["player"]]
+
+    print("".join(list((top(game[2]), mid(game[1]), bot(game[0])))))
 
 
 def welcome():
@@ -43,7 +47,9 @@ def welcome():
 def check_ready():
     ready = input("are you ready")
 
-    return ready.strip().lower() in ["y", "yes", "ready", "ok", "1", "true"]
+    if ready.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
+        print("players not ready, exiting...")
+        exit()
 
 
 def get_players():
@@ -52,19 +58,57 @@ def get_players():
 
     return player_one, player_two
 
-# turn = {
-#     "player": 1,
-#     "coords": (0, 0),
-# }
+def get_input(turns_taken):
+    while True:
+        coords = tuple([int(coord) for coord in input("enter coords").split(",")])
+        used_coords = [turn["coords"] for turn in turns_taken]
+        marks = [player_marks[turn["player"]] for turn in turns_taken]
+
+        for i in range(len(used_coords)):
+            used_coord = used_coords[i]
+            mark = marks[i]
+
+            if coords == used_coord:
+                print("can't do that")
+                print(mark)
+
+        return coords
+
+def setup():
+    welcome()
+    check_ready()
+
+    return get_players()
+
 
 turns_taken = []
+player_one, player_two = setup()
+player_marks = {
+    player_one: "X",
+    player_two: "O",
+}
+curr_player = player_one
 
-welcome()
-
-if not check_ready():
-    print("players not ready, exiting...")
-    exit()
-
+print("starting game...")
 while True:
-    print("starting game...")
-    break
+    # coords = get_input(turns_taken)
+
+    #
+
+    # take_turn(turns_taken, curr_player, coords)
+    curr_turn = {
+        "player": curr_player,
+        "coords": coords,
+    }
+
+    turns_taken.append(curr_turn)
+    #
+
+    draw(turns_taken)
+
+    # curr_player = switch_player(curr_player)
+    if curr_player == player_one:
+        curr_player = player_two
+    else:
+        curr_player = player_one
+    #
