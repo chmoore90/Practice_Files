@@ -1,4 +1,4 @@
-# Do exercise 27, using an event-driven system.
+# Do exercise 27, using an event-driven approach.
 
 reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 game = reset
@@ -89,7 +89,6 @@ def get_input(turns_taken):
             continue
 
         used_coords = [turn["coords"] for turn in turns_taken]
-        marks = [player_marks[turn["player"]] for turn in turns_taken]
 
         if coords in used_coords:
             print("This space is occupied!")
