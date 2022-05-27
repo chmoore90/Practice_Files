@@ -1,5 +1,6 @@
 # Do exercise 27, using an event-driven approach.
 
+
 reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 game = reset
 
@@ -13,7 +14,7 @@ def mid(row):
 
 
 def bot(row):
-    return f"\n --- --- ---\n| {row[0]} | {row[1]} | {row[2]} |"
+    return f"\n --- --- ---\n| {row[0]} | {row[1]} | {row[2]} |\n --- --- ---"
 
 
 def draw(turns_taken):
@@ -88,12 +89,18 @@ def get_input(turns_taken):
             print("Invalid input. X and Y coordinates must be 1, 2, or 3.")
             continue
 
-        used_coords = [turn["coords"] for turn in turns_taken]
+        used_coords = {}
+        for turn in turns_taken:
+            used_coords[turn["coords"]] = turn["player"]
 
-        if coords in used_coords:
-            print("This space is occupied!")
+        if coords not in used_coords:
+            return coords
+        elif curr_player == used_coords[coords]:
+            print(f"You already put an {player_marks[curr_player]} here.")
             continue
-        return coords
+        else:
+            print("Your opponent is occupying this spot!")
+            continue
 
 
 def add_curr_turn(turns_taken, curr_player, coords):
@@ -104,12 +111,15 @@ def add_curr_turn(turns_taken, curr_player, coords):
     turns_taken.append(curr_turn)
 
 
+def check_state():
+    return "play on"
+
+
 def change_player(curr_player):
     if curr_player == player_one:
-        curr_player = player_two
+        return player_two
     else:
-        curr_player = player_one
-    return curr_player
+        return player_one
 
 
 def setup():
@@ -125,11 +135,24 @@ player_marks = {
     player_one: "X",
     player_two: "O",
 }
-curr_player = player_one
+
+curr_player = None
 
 print("starting game...")
+
+state = "play on"
 while True:
-    coords = get_input(turns_taken)
-    add_curr_turn(turns_taken, curr_player, coords)
-    draw(turns_taken)
-    curr_player = change_player(curr_player)
+    while state == "play on":
+        curr_player = change_player(curr_player)
+        coords = get_input(turns_taken)
+        add_curr_turn(turns_taken, curr_player, coords)
+        draw(turns_taken)
+        state = check_state()
+
+
+    if state == "win1":
+        pass
+    elif state == "win2":
+        pass
+    else:
+        pass
