@@ -2,11 +2,6 @@
 # ask the user for a coordinate of where they want to place their piece.
 
 
-<<<<<<< HEAD
-
-reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-game = reset
-=======
 reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 game = reset
 
@@ -18,7 +13,6 @@ mark_to_player = {
     "X": "Player 1",
     "O": "Player 2",
 }
->>>>>>> d0a08ada77a0afe8c719a75b60fea046e5141e57
 
 
 def top(game):
@@ -29,13 +23,6 @@ def mid(game):
     return f"\n --- --- ---\n| {game[1][0]} | {game[1][1]} | {game[1][2]} |"
 
 
-<<<<<<< HEAD
-def mid_start():
-    return f"\n      ----- ----- -----\nY: 2 |(1,2)|(2,2)|(3,2)|"
-
-
-=======
->>>>>>> d0a08ada77a0afe8c719a75b60fea046e5141e57
 def bot(game):
     return f"\n --- --- ---\n| {game[0][0]} | {game[0][1]} | {game[0][2]} |"
 
@@ -67,10 +54,6 @@ def welcome():
 def get_input(game, turn, player_to_mark):
     while turn in player_to_mark:
         xy_input = input(f"{turn}'s turn. Enter your coordinates: ")
-        if xy_input == "XXX":
-            turn = xy_input
-            print("Thanks for playing!")
-            return turn
         xy_list = xy_input.split(",")
         x = int(xy_list[0])
         y = int(xy_list[1])
@@ -93,56 +76,9 @@ def change_players(turn):
 
 welcome()
 
-<<<<<<< HEAD
-ready = input("Are you ready to play? (Type XXX at any time to exit) ")
-ready = "yes"
-while ready != "XXX":
-    turn = "p1"
-    while turn == "p1":
-        coord_in = input("Player 1's turn. Enter your coordinates: ")
-        coords = coord_in.split(",")
-        x = int(coords[0])
-        y = int(coords[1])
-        if x > 3 or x < 1:
-            print("Invalid number. X must be a 1, 2, or 3.")
-            continue
-        if y > 3 or y < 1:
-            print("Invalid number. Y must be a 1, 2, or 3.")
-            continue
-        if game[y - 1][x - 1] == "O":
-            print("Your opponent is occupying this spot!")
-            continue
-        elif game[y-1][x-1] == "X":
-            print("You already placed an X here.")
-            continue
-        game[(y - 1)][(x - 1)] = "X"
-        print(draw(game))
-        turn = "p2"
-    while turn == "p2":
-        coord_in = input("Player 2's turn. Enter your coordinates: ")
-        coords = coord_in.split(",")
-        x = int(coords[0])
-        y = int(coords[1])
-        if x > 3 or x < 1:
-            print("Invalid number. X must be a 1, 2, or 3.")
-            continue
-        if y > 3 or y < 1:
-            print("Invalid number. Y must be a 1, 2, or 3.")
-            continue
-        if game[(y - 1)][(x - 1)] == "X":
-            print("Your opponent is occupying this spot!")
-            continue
-        elif game[y - 1][x - 1] == "O":
-            print("You already placed an O here.")
-            continue
-        game[(y - 1)][x - 1] = "O"
-        print(draw(game))
-        turn = "p1"
-=======
 turn = input("Are you ready to play? (Type XXX at any time to exit) ")
 turn = "Player 1"
 while turn != "XXX":
     get_input(game, turn, player_to_mark)
     print(draw(game))
     turn = change_players(turn)
->>>>>>> d0a08ada77a0afe8c719a75b60fea046e5141e57
