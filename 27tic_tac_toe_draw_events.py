@@ -62,6 +62,13 @@ def get_players():
     return player_one, player_two
 
 
+def change_player(curr_player):
+    if curr_player == player_one:
+        return player_two
+    else:
+        return player_one
+
+
 def get_input(turns_taken):
     while True:
         # Get user input
@@ -111,15 +118,24 @@ def add_curr_turn(turns_taken, curr_player, coords):
     turns_taken.append(curr_turn)
 
 
-def check_state():
-    return "play on"
+def check_state(game):
 
+    win_conditions = {
+        "top row": game[2][0] == game[2][1] == game[2][2],
+        "middle row": game[1][0] == game[1][1] == game[1][2],
+        "bottom row": game[0][0] == game[0][1] == game[0][2],
+        "first column": game[2][0] == game[1][0] == game[0][0],
+        "second column": game[2][1] == game[1][1] == game[0][1],
+        "third column": game[2][2] == game[1][2] == game[0][2],
+        "diagonal top-bottom": game[2][0] == game[1][1] == game[0][2],
+        "diagonal bottom-top": game[0][0] == game[1][1] == game[2][2],
+    }
 
-def change_player(curr_player):
-    if curr_player == player_one:
-        return player_two
-    else:
-        return player_one
+    for _, value in win_conditions.items():
+        if value is True:
+            return "game over"
+        else:
+            return "play on"
 
 
 def setup():
@@ -137,22 +153,21 @@ player_marks = {
 }
 
 curr_player = None
+state = "play on"
 
 print("starting game...")
 
-state = "play on"
 while True:
     while state == "play on":
         curr_player = change_player(curr_player)
         coords = get_input(turns_taken)
         add_curr_turn(turns_taken, curr_player, coords)
         draw(turns_taken)
-        state = check_state()
+        state = check_state(game)
 
-
-    if state == "win1":
-        pass
-    elif state == "win2":
-        pass
-    else:
-        pass
+        if state == "win1":
+            pass
+        elif state == "win2":
+            pass
+        else:
+            pass
