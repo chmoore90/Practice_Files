@@ -75,7 +75,6 @@ def get_input(turns_taken):
         coords_in = input(f"{curr_player}'s turn. Enter your coordinates: ")
 
         # Input validation
-
         try:
             coords_xy = [int(coord) for coord in coords_in.split(",")]
             coords = tuple(coords_xy)
@@ -121,21 +120,45 @@ def add_curr_turn(turns_taken, curr_player, coords):
 def check_state(game):
 
     win_conditions = {
-        "top row": game[2][0] == game[2][1] == game[2][2],
-        "middle row": game[1][0] == game[1][1] == game[1][2],
-        "bottom row": game[0][0] == game[0][1] == game[0][2],
-        "first column": game[2][0] == game[1][0] == game[0][0],
-        "second column": game[2][1] == game[1][1] == game[0][1],
-        "third column": game[2][2] == game[1][2] == game[0][2],
-        "diagonal top-bottom": game[2][0] == game[1][1] == game[0][2],
-        "diagonal bottom-top": game[0][0] == game[1][1] == game[2][2],
+        "top row": [
+            game[2][0] == game[2][1] == game[2][2],
+            [game[2][0], game[2][1], game[2][2]],
+        ],
+        "middle row": [
+            game[1][0] == game[1][1] == game[1][2],
+            [game[1][0], game[1][1], game[1][2]],
+        ],
+        "bottom row": [
+            game[0][0] == game[0][1] == game[0][2],
+            [game[0][0], game[0][1], game[0][2]],
+        ],
+        "first column": [
+            game[2][0] == game[1][0] == game[0][0],
+            [game[2][0], game[1][0], game[0][0]],
+        ],
+        "second column": [
+            game[2][1] == game[1][1] == game[0][1],
+            [game[2][1], game[1][1], game[0][1]],
+        ],
+        "third column": [
+            game[2][2] == game[1][2] == game[0][2],
+            [game[2][2], game[1][2], game[0][2]],
+        ],
+        "diagonal top-bottom": [
+            game[2][0] == game[1][1] == game[0][2],
+            [game[2][0], game[1][1], game[0][2]],
+        ],
+        "diagonal bottom-top": [
+            game[0][0] == game[1][1] == game[2][2],
+            [game[0][0], game[1][1], game[2][2]],
+        ],
     }
 
-    for _, value in win_conditions.items():
-        if value is True:
+    for value in win_conditions.values():
+        if value[0] and " " not in value[1]:
+            print(f"{curr_player} wins!")
             return "game over"
-        else:
-            return "play on"
+    return "play on"
 
 
 def setup():
@@ -165,9 +188,12 @@ while True:
         draw(turns_taken)
         state = check_state(game)
 
-        if state == "win1":
-            pass
-        elif state == "win2":
-            pass
-        else:
-            pass
+        if state == "game over":
+            ready = input("Would you like to play again? ")
+            if ready.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
+                print("Thanks for playing!")
+                print("closing game...")
+                exit()
+            print(f"Starting a new game. Loser gets to go first!")
+            game = reset
+            state = "play on"
