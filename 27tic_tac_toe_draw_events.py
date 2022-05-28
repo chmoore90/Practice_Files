@@ -1,8 +1,12 @@
 # Do exercise 27, using an event-driven approach.
 
 
-reset = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-game = reset
+def reset(game, turns_taken, state):
+    game.clear()
+    game = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+    turns_taken.clear()
+    state = "play on"
+    return game, turns_taken, state
 
 
 def top(row):
@@ -179,8 +183,13 @@ def setup():
     return get_players()
 
 
-turns_taken = []
 player_one, player_two = setup()
+
+game = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+turns_taken = []
+curr_player = None
+state = "play on"
+
 player_marks = {
     player_one: "X",
     player_two: "O",
@@ -190,8 +199,6 @@ player_counts = {
     player_two: 0,
 }
 
-curr_player = None
-state = "play on"
 
 print("starting game...")
 
@@ -200,20 +207,18 @@ while True:
         curr_player = change_player(curr_player)
         coords = get_input(turns_taken)
         add_curr_turn(turns_taken, curr_player, coords)
-        draw(turns_taken,game)
+        draw(turns_taken, game)
         state = check_state(game, player_marks, player_counts, turns_taken)
 
         if state == "game over":
             ready = input("Would you like to play again? ")
 
             if ready.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
-                print(
-                    f"Thanks for playing! Here are your win results:\n{player_one} wins: {player_counts[player_one]}\n{player_two} wins: {player_counts[player_two]}"
-                )
+                print("Thanks for playing! Here are your win tallies:")
+                print(f"{player_one} wins: {player_counts[player_one]}")
+                print(f"{player_two} wins: {player_counts[player_two]}")
                 print("closing game...")
                 exit()
 
             print(f"Starting a new game. Loser gets to go first!")
-            game = reset
-            turns_taken.clear()
-            state = "play on"
+            game, turns_taken, state = reset(game, turns_taken, state)
