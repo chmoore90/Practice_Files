@@ -117,7 +117,7 @@ def add_curr_turn(turns_taken, curr_player, coords):
     turns_taken.append(curr_turn)
 
 
-def check_state(game):
+def check_state(game, player_marks, turns_taken):
 
     win_conditions = {
         "top row": [
@@ -154,10 +154,20 @@ def check_state(game):
         ],
     }
 
-    for value in win_conditions.values():
+    # Check for a winner
+    for key, value in win_conditions.items():
         if value[0] and " " not in value[1]:
-            print(f"{curr_player} wins!")
+            print(
+                f"{curr_player} wins! They made a line of {player_marks[curr_player]}'s on the {key}"
+            )
             return "game over"
+
+    # Check for a draw
+
+    if len(turns_taken) == 9:
+        print("It's a draw!")
+        return "game over"
+
     return "play on"
 
 
@@ -186,7 +196,7 @@ while True:
         coords = get_input(turns_taken)
         add_curr_turn(turns_taken, curr_player, coords)
         draw(turns_taken)
-        state = check_state(game)
+        state = check_state(game, player_marks, turns_taken)
 
         if state == "game over":
             ready = input("Would you like to play again? ")
