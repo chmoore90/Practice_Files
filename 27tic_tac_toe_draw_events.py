@@ -17,7 +17,7 @@ def bot(row):
     return f"\n --- --- ---\n| {row[0]} | {row[1]} | {row[2]} |\n --- --- ---"
 
 
-def draw(turns_taken):
+def draw(turns_taken, game):
     for turn in turns_taken:
         x, y = turn["coords"]
         game[y - 1][x - 1] = player_marks[turn["player"]]
@@ -77,7 +77,6 @@ def get_input(turns_taken):
         # Input validation
         try:
             coords_xy = [int(coord) for coord in coords_in.split(",")]
-            coords = tuple(coords_xy)
 
         except ValueError:
             print(
@@ -96,6 +95,8 @@ def get_input(turns_taken):
             continue
 
         used_coords = {}
+        coords = tuple(coords_xy)
+
         for turn in turns_taken:
             used_coords[turn["coords"]] = turn["player"]
 
@@ -117,7 +118,7 @@ def add_curr_turn(turns_taken, curr_player, coords):
     turns_taken.append(curr_turn)
 
 
-def check_state(game, player_marks, turns_taken):
+def check_state(game, player_marks, player_counts, turns_taken):
 
     win_conditions = {
         "top row": [
@@ -144,11 +145,11 @@ def check_state(game, player_marks, turns_taken):
             game[2][2] == game[1][2] == game[0][2],
             [game[2][2], game[1][2], game[0][2]],
         ],
-        "diagonal top-bottom": [
+        "top-bottom diagonal": [
             game[2][0] == game[1][1] == game[0][2],
             [game[2][0], game[1][1], game[0][2]],
         ],
-        "diagonal bottom-top": [
+        "bottom-top diagonal": [
             game[0][0] == game[1][1] == game[2][2],
             [game[0][0], game[1][1], game[2][2]],
         ],
@@ -157,13 +158,13 @@ def check_state(game, player_marks, turns_taken):
     # Check for a winner
     for key, value in win_conditions.items():
         if value[0] and " " not in value[1]:
+            player_counts[curr_player] += 1
             print(
-                f"{curr_player} wins! They made a line of {player_marks[curr_player]}'s on the {key}"
+                f"{curr_player} wins! They made a line of {player_marks[curr_player]}'s in the {key}."
             )
             return "game over"
 
     # Check for a draw
-
     if len(turns_taken) == 9:
         print("It's a draw!")
         return "game over"
@@ -184,6 +185,10 @@ player_marks = {
     player_one: "X",
     player_two: "O",
 }
+player_counts = {
+    player_one: 0,
+    player_two: 0,
+}
 
 curr_player = None
 state = "play on"
@@ -195,15 +200,20 @@ while True:
         curr_player = change_player(curr_player)
         coords = get_input(turns_taken)
         add_curr_turn(turns_taken, curr_player, coords)
-        draw(turns_taken)
-        state = check_state(game, player_marks, turns_taken)
+        draw(turns_taken,game)
+        state = check_state(game, player_marks, player_counts, turns_taken)
 
         if state == "game over":
             ready = input("Would you like to play again? ")
+
             if ready.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
-                print("Thanks for playing!")
+                print(
+                    f"Thanks for playing! Here are your win results:\n{player_one} wins: {player_counts[player_one]}\n{player_two} wins: {player_counts[player_two]}"
+                )
                 print("closing game...")
                 exit()
+
             print(f"Starting a new game. Loser gets to go first!")
             game = reset
+            turns_taken.clear()
             state = "play on"
