@@ -15,9 +15,12 @@
 
 import random
 
-with open("sowpods.txt", "r") as sowpods_dict:
-    sowpods = sowpods_dict.read()
+def get_word():
+    with open("sowpods.txt", "r") as sowpods_dict:
+        sowpods = sowpods_dict.read()
 
-word = "".join(random.sample(sowpods.split(), 1))
+    word = "".join(random.sample(sowpods.split(), 1))
 
-print(word)
+    return word
+
+print(get_word())
