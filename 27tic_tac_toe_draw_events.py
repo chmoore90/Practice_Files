@@ -124,44 +124,56 @@ def add_curr_turn(turns_taken, curr_player, coords):
 
 def check_state(game, player_marks, player_counts, turns_taken):
 
+    # win_conditions = {
+    #     "top row": [
+    #         game[2][0] == game[2][1] == game[2][2],
+    #         [game[2][0], game[2][1], game[2][2]],
+    #     ],
+    #     "middle row": [
+    #         game[1][0] == game[1][1] == game[1][2],
+    #         [game[1][0], game[1][1], game[1][2]],
+    #     ],
+    #     "bottom row": [
+    #         game[0][0] == game[0][1] == game[0][2],
+    #         [game[0][0], game[0][1], game[0][2]],
+    #     ],
+    #     "first column": [
+    #         game[2][0] == game[1][0] == game[0][0],
+    #         [game[2][0], game[1][0], game[0][0]],
+    #     ],
+    #     "second column": [
+    #         game[2][1] == game[1][1] == game[0][1],
+    #         [game[2][1], game[1][1], game[0][1]],
+    #     ],
+    #     "third column": [
+    #         game[2][2] == game[1][2] == game[0][2],
+    #         [game[2][2], game[1][2], game[0][2]],
+    #     ],
+    #     "top-bottom diagonal": [
+    #         game[2][0] == game[1][1] == game[0][2],
+    #         [game[2][0], game[1][1], game[0][2]],
+    #     ],
+    #     "bottom-top diagonal": [
+    #         game[0][0] == game[1][1] == game[2][2],
+    #         [game[0][0], game[1][1], game[2][2]],
+    #     ],
+    # }
+
     win_conditions = {
-        "top row": [
-            game[2][0] == game[2][1] == game[2][2],
-            [game[2][0], game[2][1], game[2][2]],
-        ],
-        "middle row": [
-            game[1][0] == game[1][1] == game[1][2],
-            [game[1][0], game[1][1], game[1][2]],
-        ],
-        "bottom row": [
-            game[0][0] == game[0][1] == game[0][2],
-            [game[0][0], game[0][1], game[0][2]],
-        ],
-        "first column": [
-            game[2][0] == game[1][0] == game[0][0],
-            [game[2][0], game[1][0], game[0][0]],
-        ],
-        "second column": [
-            game[2][1] == game[1][1] == game[0][1],
-            [game[2][1], game[1][1], game[0][1]],
-        ],
-        "third column": [
-            game[2][2] == game[1][2] == game[0][2],
-            [game[2][2], game[1][2], game[0][2]],
-        ],
-        "top-bottom diagonal": [
-            game[2][0] == game[1][1] == game[0][2],
-            [game[2][0], game[1][1], game[0][2]],
-        ],
-        "bottom-top diagonal": [
-            game[0][0] == game[1][1] == game[2][2],
-            [game[0][0], game[1][1], game[2][2]],
-        ],
+        "top row": game[2][0] == game[2][1] == game[2][2] and game[2][0].split(),
+        "middle row": game[1][0] == game[1][1] == game[1][2] and game[1][0].split(),
+        "bottom row": game[0][0] == game[0][1] == game[0][2] and game[0][0].split(),
+        "first column": game[2][0] == game[1][0] == game[0][0] and game[2][0].split(),
+        "second column": game[2][1] == game[1][1] == game[0][1] and game[2][1].split(),
+        "third column": game[2][2] == game[1][2] == game[0][2] and game[2][2].split(),
+        "top-bottom diagonal": game[2][0] == game[1][1] == game[0][2] and game[2][0].split(),
+        "bottom-top diagonal": game[0][0] == game[1][1] == game[2][2] and game[0][0].split(),
     }
 
     # Check for a winner
     for key, value in win_conditions.items():
-        if value[0] and " " not in value[1]:
+        # if value[0] and " " not in value[1]:
+        if value:
             player_counts[curr_player] += 1
             print(
                 f"{curr_player} wins! They made a line of {player_marks[curr_player]}'s in the {key}."
