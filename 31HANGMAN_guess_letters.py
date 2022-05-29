@@ -14,6 +14,26 @@ def get_word():
     return word
 
 
+def check_guess(guess, word, game_letters):
+    game_letters = list(game_letters)
+    index = []
+
+    for x in range(len(word)):
+        try:
+            index.append(word.index(guess, x, x + 1))
+        except:
+            pass
+    print(index)
+
+    for i in index:
+        game_letters.pop(i)
+        game_letters.insert(i, guess)
+
+    game_letters = ''.join(game_letters)
+
+    return game_letters
+
+
 word = get_word()
 print(word)
 
@@ -27,16 +47,7 @@ while True:
         print(f"no {guess}")
         continue
 
-    index = []
-
-    for x in range(len(word)):
-        try:
-            index.append(word.index(guess, x, x+1))
-        except:
-            pass
-    print(index)
-
-    for i in index:
-        game_letters = game_letters[i].replace("_", guess)
-
+    print(game_letters)
+    new_letters = check_guess(guess, word, game_letters)
+    game_letters = new_letters
     print(game_letters)
