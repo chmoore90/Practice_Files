@@ -4,6 +4,7 @@
 # Remember to stop the game when all the letters have been guessed correctly! Don’t worry about choosing a word randomly or
 # keeping track of the number of guesses the player has remaining - we will deal with those in a future exercise.
 
+
 import random
 
 
@@ -29,7 +30,7 @@ def check_guess(guess, word, game_letters):
         game_letters.pop(i)
         game_letters.insert(i, guess)
 
-    game_letters = ''.join(game_letters)
+    game_letters = "".join(game_letters)
 
     return game_letters
 
@@ -38,16 +39,40 @@ word = get_word()
 print(word)
 
 game_letters = "_" * len(word)
-print(game_letters)
+guess_list = []
 
 while True:
-    guess = input("Guess a letter: ").upper()
+
+    guess = input(f"Previous guesses: {', '.join(guess_list)}\nGuess a letter: ").upper()
+
+
+
+    if guess in guess_list:
+        print(f"You've already guessed '{guess}'.")
+        print(game_letters)
+        continue
+
+    if len(guess) != 1:
+        print("Invalid guess. Please guess one letter.")
+        continue
+
+    if guess.isalpha() is not True:
+        print("Invalid guess. Please enter a letter.")
+        continue
 
     if guess not in word:
         print(f"no {guess}")
+        print(game_letters)
+        guess_list.append(guess)
         continue
 
-    print(game_letters)
+    guess_list.append(guess)
+
     new_letters = check_guess(guess, word, game_letters)
+
     game_letters = new_letters
+    if game_letters == word:
+        print(f"Congrats you got it! The word was {word}.")
+        break
+
     print(game_letters)
