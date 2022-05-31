@@ -36,6 +36,11 @@ def check_guess(guess, word, game_letters):
         game_letters.pop(i)
         game_letters.insert(i, guess)
 
+    if len(index) > 1:
+        print(f"Yes! There are {len(index)} {guess}'s.")
+    else:
+        print(f"Yes! There is 1 {guess}.")
+
     game_letters = "".join(game_letters)
 
     return game_letters
@@ -45,20 +50,21 @@ while True:
     word = get_word()
     game_letters = "_" * len(word)
     guess_list = []
+    guess_list_wrong = []
 
     while True:
 
         guess = input(
-            f"Previous guesses: {', '.join(guess_list)}\nGuess a letter: "
+            f"Incorrect guesses: {', '.join(guess_list_wrong)}\nGuess a letter: "
         ).upper()
 
         if guess in guess_list:
-            print(f"You've already guessed '{guess}'.")
+            print(f"You've already guessed {guess}.")
             print(game_letters)
             continue
 
         if len(guess) != 1:
-            print("Invalid guess. Please guess one letter.")
+            print("Invalid guess. Please guess only one letter.")
             continue
 
         if guess.isalpha() is not True:
@@ -66,22 +72,25 @@ while True:
             continue
 
         if guess not in word:
-            print(f"no {guess}")
+            print(f"No {guess}'s.")
             print(game_letters)
             guess_list.append(guess)
+            guess_list_wrong.append(guess)
             continue
 
         guess_list.append(guess)
 
         new_letters = check_guess(guess, word, game_letters)
-
         game_letters = new_letters
+
         if game_letters == word:
-            print(f"Congrats you got it! The word was {word}.")
+            print(f"You got it! The word was {word}.")
             replay = input("Do you want to play again? ")
+
             if replay.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
                 print("Thanks for playing!")
                 exit()
+
             break
 
         print(game_letters)
