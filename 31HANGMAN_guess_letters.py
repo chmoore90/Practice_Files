@@ -24,7 +24,6 @@ def check_guess(guess, word, game_letters):
             index.append(word.index(guess, x, x + 1))
         except:
             pass
-    print(index)
 
     for i in index:
         game_letters.pop(i)
@@ -43,9 +42,9 @@ guess_list = []
 
 while True:
 
-    guess = input(f"Previous guesses: {', '.join(guess_list)}\nGuess a letter: ").upper()
-
-
+    guess = input(
+        f"Previous guesses: {', '.join(guess_list)}\nGuess a letter: "
+    ).upper()
 
     if guess in guess_list:
         print(f"You've already guessed '{guess}'.")
