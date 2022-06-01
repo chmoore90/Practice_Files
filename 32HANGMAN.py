@@ -13,6 +13,7 @@
 
 
 import random
+from hangman_art import *
 
 
 def get_word():
@@ -67,7 +68,7 @@ while True:
             print("Invalid guess. Please guess only one letter.")
             continue
 
-        if guess.isalpha() is not True:
+        if not guess.isalpha():
             print("Invalid guess. Please enter a letter.")
             continue
 
