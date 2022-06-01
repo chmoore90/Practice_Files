@@ -15,6 +15,8 @@
 import random
 from hangman_art import *
 
+limit = 6
+
 
 def get_word():
     with open("sowpods.txt", "r") as sowpods_dict:
@@ -57,6 +59,7 @@ def replay():
 
 while True:
     print("New word selected!")
+
     word = get_word()
     game_letters = "_" * len(word)
     guess_list = []
@@ -64,35 +67,39 @@ while True:
 
     while True:
 
+        print(f"\n{game_letters}")
         draw_hangman(len(guess_list_wrong))
-        if guess_list_wrong != []:
-            print(f"Incorrect guesses: {', '.join(guess_list_wrong)}")
+        print(
+            f"You have {6 - len(guess_list_wrong)} lives - err, limbs remaining. Incorrect guesses: {', '.join(guess_list_wrong)}"
+        )
         guess = input("Guess a letter: ").upper()
 
         if guess in guess_list:
-            print(f"You've already guessed {guess}.")
-            print(game_letters)
+            print(f"You've already guessed {guess}")
             continue
 
         if len(guess) != 1:
             print("Invalid guess. Please guess only one letter.")
+
             continue
 
         if not guess.isalpha():
             print("Invalid guess. Please enter a letter.")
+
             continue
 
         if guess not in word:
             print(f"No {guess}'s.")
-            print(game_letters)
             guess_list.append(guess)
             guess_list_wrong.append(guess)
-            if len(guess_list_wrong) == 6:
+            if len(guess_list_wrong) == limit:
+                draw_hangman(len(guess_list_wrong))
                 print(
                     f"Game over! You were too late for the hangman. The word was {word}."
                 )
                 replay()
                 break
+
             continue
 
         guess_list.append(guess)
@@ -104,5 +111,3 @@ while True:
             print(f"You got it! The word was {word}.")
             replay()
             break
-
-        print(game_letters)
