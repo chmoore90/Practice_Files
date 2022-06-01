@@ -68,18 +68,10 @@ hangman = [
         "\n  |     |",
         "\n  |    / \\",
         "\n  |",
-        "\n__|_______",
+        f"\n__|_______",
     ],
 ]
 
-print("".join(hangman[0]))
-print("".join(hangman[1]))
-print("".join(hangman[2]))
-print("".join(hangman[3]))
-print("".join(hangman[4]))
-print("".join(hangman[5]))
-print("".join(hangman[6]))
-
 
 def draw_hangman(x):
-    print(hangman[x])
+    print("".join(hangman[x]))

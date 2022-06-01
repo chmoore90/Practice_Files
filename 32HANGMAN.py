@@ -38,16 +38,25 @@ def check_guess(guess, word, game_letters):
         game_letters.insert(i, guess)
 
     if len(index) > 1:
-        print(f"Yes! There are {len(index)} {guess}'s.")
+        print(f"\nYes! There are {len(index)} {guess}'s.")
     else:
-        print(f"Yes! There is 1 {guess}.")
+        print(f"\nYes! There is 1 {guess}.")
 
     game_letters = "".join(game_letters)
 
     return game_letters
 
 
+def replay():
+    replay = input("Do you want to play again? ")
+
+    if replay.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
+        print("Thanks for playing!")
+        exit()
+
+
 while True:
+    print("New word selected!")
     word = get_word()
     game_letters = "_" * len(word)
     guess_list = []
@@ -55,9 +64,10 @@ while True:
 
     while True:
 
-        guess = input(
-            f"Incorrect guesses: {', '.join(guess_list_wrong)}\nGuess a letter: "
-        ).upper()
+        draw_hangman(len(guess_list_wrong))
+        if guess_list_wrong != []:
+            print(f"Incorrect guesses: {', '.join(guess_list_wrong)}")
+        guess = input("Guess a letter: ").upper()
 
         if guess in guess_list:
             print(f"You've already guessed {guess}.")
@@ -77,6 +87,12 @@ while True:
             print(game_letters)
             guess_list.append(guess)
             guess_list_wrong.append(guess)
+            if len(guess_list_wrong) == 6:
+                print(
+                    f"Game over! You were too late for the hangman. The word was {word}."
+                )
+                replay()
+                break
             continue
 
         guess_list.append(guess)
@@ -86,12 +102,7 @@ while True:
 
         if game_letters == word:
             print(f"You got it! The word was {word}.")
-            replay = input("Do you want to play again? ")
-
-            if replay.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
-                print("Thanks for playing!")
-                exit()
-
+            replay()
             break
 
         print(game_letters)
