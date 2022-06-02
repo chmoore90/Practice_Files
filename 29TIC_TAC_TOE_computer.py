@@ -51,21 +51,6 @@ def welcome():
     )
 
 
-def check_ready():
-    ready = input("Are you ready to start? ")
-
-    if ready.strip().lower() not in ["y", "yes", "ready", "ok", "1", "true"]:
-        print("player not ready, exiting...")
-        exit()
-
-
-def get_players():
-    player = input("Enter player name: ")
-    computer = "Computer"
-
-    return player, computer
-
-
 def change_player(curr_player):
     if curr_player == player:
         return computer
@@ -73,7 +58,7 @@ def change_player(curr_player):
         return player
 
 
-def get_player():
+def get_player(turns_taken):
     while True:
 
         # Get user input
@@ -99,6 +84,7 @@ def get_player():
             print("Invalid input. X and Y coordinates must be 1, 2, or 3.")
             continue
 
+        # Coordinate validation
         used_coords = {}
         coords = tuple(coords_xy)
 
@@ -107,15 +93,75 @@ def get_player():
 
         if coords not in used_coords:
             return coords
+
         elif curr_player == used_coords[coords]:
             print(f"You already put an {player_marks[player]} here.")
             continue
+
         else:
             print("The computer is occupying this spot!")
             continue
 
-def get_computer():
-    pass
+
+def get_computer(game, player_marks):
+
+    game_tiles = {
+        "top row": [game[2][0], game[2][1], game[2][2]],
+        "middle row": [game[1][0], game[1][1], game[1][2]],
+        "bottom row": [game[0][0], game[0][1], game[0][2]],
+        "first column": [game[2][0], game[1][0], game[0][0]],
+        "second column": [game[2][1], game[1][1], game[0][1]],
+        "third column": [game[2][2], game[1][2], game[0][2]],
+        "top-bottom diagonal": [game[2][0], game[1][1], game[0][2]],
+        "bottom-top diagonal": [game[0][0], game[1][1], game[2][2]],
+    }
+
+    coords_tiles = {
+        "top row": [(1, 3), (2, 3), (3, 3)],
+        "middle row": [(1, 2), (2, 2), (3, 2)],
+        "bottom row": [(1, 1), (2, 1), (3, 1)],
+        "first column": [(1, 3), (1, 2), (1, 1)],
+        "second column": [(2, 3), (2, 2), (2, 1)],
+        "third column": [(3, 3), (3, 2), (3, 1)],
+        "top-bottom diagonal": [(1, 3), (2, 2), (3, 1)],
+        "bottom-top diagonal": [(1, 1), (2, 2), (3, 3)],
+    }
+
+    # block player
+    for key, value in game_tiles.items():
+        if value.count(player_marks[player]) == 2:
+            try:
+                o = value.index(" ")
+            except:
+                pass
+            if o:
+                coords = coords_tiles.get(key)[o]
+
+                return coords
+
+    # search for win
+    for key, value in game_tiles.items():
+        if value.count(player_marks[computer]) == 2:
+            try:
+                x = value.index(" ")
+            except:
+                pass
+            if o:
+                coords = coords_tiles.get(key)[o]
+
+                return coords
+
+    # place in centre or corners
+    if game[1][1] == " ":
+        coords = (2, 2)
+        return coords
+
+    for key, value in game_tiles.items():
+        for i in range(len(value)):
+            if value[i] == " ":
+                coords = coords_tiles.get(key)[i]
+
+                return coords
 
 
 def add_curr_turn(turns_taken, curr_player, coords):
@@ -158,14 +204,12 @@ def check_state(game, player_marks, player_counts, turns_taken):
     return "play on"
 
 
-def setup():
-    welcome()
-    check_ready()
+# GAME CODE STARTS HERE
 
-    return get_players()
+welcome()
 
-
-player, computer = setup()
+player = input("Enter player name: ")
+computer = "Computer"
 
 game = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 turns_taken = []
@@ -182,15 +226,13 @@ player_counts = {
 }
 
 
-print("starting game...")
-
 while True:
     while state == "play on":
         curr_player = change_player(curr_player)
         if curr_player == player:
             coords = get_player(turns_taken)
         else:
-            coords = get_computer()
+            coords = get_computer(game, player_marks)
         add_curr_turn(turns_taken, curr_player, coords)
         draw(turns_taken, game)
         state = check_state(game, player_marks, player_counts, turns_taken)
@@ -202,8 +244,7 @@ while True:
                 print("Thanks for playing! Here are your win tallies:")
                 print(f"{player} wins: {player_counts[player]}")
                 print(f"{computer} wins: {player_counts[computer]}")
-                print("closing game...")
                 exit()
 
-            print(f"Starting a new game. Loser gets to go first!")
+            print("Starting a new game. Loser gets to go first!")
             game, turns_taken, state = reset(game, turns_taken, state)
