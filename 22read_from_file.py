@@ -3,6 +3,7 @@
 
 # # Extra 1 (personal): Create a new file to read from by scraping from the example .txt file provided.
 
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -38,21 +39,28 @@ from bs4 import BeautifulSoup
 base_url2 = "https://www.practicepython.org/assets/Training_01.txt"
 r2 = requests.get(base_url2)
 
-soup2 = BeautifulSoup(r2.text, "html.parser")
-
-with open("SUNlist.txt", "w") as sun_write:
-    soup_string2 = str(soup2)
-    sun_write.write(soup_string2)
+soup_string2 = str(BeautifulSoup(r2.text, "html.parser"))
+soup_list2 = soup_string2.splitlines()
 
 # Begin exercise:
 
-with open("SUNlist.txt", "r") as sun_read:
-    cat_count = {}
-    line = sun_read.readline()[3:-26]
-    while line:
-        if line in cat_count:
-            cat_count[line] += 1
-        elif line not in cat_count:
-            cat_count[line] = 1
-        line = sun_read.readline()[3:-26]
-    print(cat_count)
+cat_count = {}
+
+
+for line in soup_list2:
+
+    if line[3:-25] in cat_count:
+        cat_count[line[3:-25]] += 1
+    else:
+        cat_count[line[3:-25]] = 1
+
+
+# line = soup_string2[3:-26]
+# while line:
+#     if line in cat_count:
+#         cat_count[line] += 1
+#     elif line not in cat_count:
+#         cat_count[line] = 1
+#     line = soup_string2[3:-26]
+
+print(cat_count)

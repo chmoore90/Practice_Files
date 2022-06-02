@@ -4,16 +4,21 @@
 # Remember to stop the game when all the letters have been guessed correctly! Don’t worry about choosing a word randomly or
 # keeping track of the number of guesses the player has remaining - we will deal with those in a future exercise.
 
-
+import requests
+from bs4 import BeautifulSoup
 import random
 
 
 def get_word():
-    with open("sowpods.txt", "r") as sowpods_dict:
-        sowpods = sowpods_dict.read()
-    word = "".join(random.sample(sowpods.split(), 1))
-    return word
+    sowpods_url = "https://norvig.com/ngrams/sowpods.txt"
 
+    r = requests.get(sowpods_url)
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    sowpods = str(soup).splitlines()
+    word = "".join(random.sample(sowpods, 1))
+
+    return word
 
 def check_guess(guess, word, game_letters):
     game_letters = list(game_letters)

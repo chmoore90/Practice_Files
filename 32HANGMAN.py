@@ -11,7 +11,8 @@
 # This is challenging - do the other parts of the exercise first!
 # Your solution will be a lot cleaner if you make use of functions to help you!
 
-
+import requests
+from bs4 import BeautifulSoup
 import random
 from hangman_art import *
 
@@ -19,9 +20,14 @@ limit = 6
 
 
 def get_word():
-    with open("sowpods.txt", "r") as sowpods_dict:
-        sowpods = sowpods_dict.read()
-    word = "".join(random.sample(sowpods.split(), 1))
+    sowpods_url = "https://norvig.com/ngrams/sowpods.txt"
+
+    r = requests.get(sowpods_url)
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    sowpods = str(soup).splitlines()
+    word = "".join(random.sample(sowpods, 1))
+
     return word
 
 
