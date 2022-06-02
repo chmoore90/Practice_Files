@@ -131,11 +131,11 @@ def get_computer(game, player_marks):
     for key, value in game_tiles.items():
         if value.count(player_marks[player]) == 2:
             try:
-                o = value.index(" ")
+                x = value.index(" ")
             except:
                 pass
-            if o:
-                coords = coords_tiles.get(key)[o]
+            else:
+                coords = coords_tiles.get(key)[x]
 
                 return coords
 
@@ -143,11 +143,11 @@ def get_computer(game, player_marks):
     for key, value in game_tiles.items():
         if value.count(player_marks[computer]) == 2:
             try:
-                x = value.index(" ")
+                y = value.index(" ")
             except:
                 pass
-            if o:
-                coords = coords_tiles.get(key)[o]
+            else:
+                coords = coords_tiles.get(key)[y]
 
                 return coords
 
