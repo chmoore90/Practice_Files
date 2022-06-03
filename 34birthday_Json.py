@@ -4,19 +4,43 @@
 # you have on disk with the scientist’s name. If you run the program multiple times and keep adding new names, your
 # JSON file should keep getting bigger and bigger.
 
+
 import json
 
-birthdays = {
-    "Chloe": "March 31, 1990",
-    "Stephen": "December 31, 1985",
-    "Pippin J. Marshmallow Bird": "October 24, 2018",
-    "Kalos P. Grumpy Bird": "June 15, 2009",
-    "Buena 'B'" : "June 29, 2009",
-    "Famous Bid": "March 29, 1999",
-    "Winnie": "October 3, 2020",
-    "Robin": "August 9, 2020",
-    "Silver": "January 22, 2008",
-}
+birthdays = {}
 
-with open("birthdays.json", "w") as f:
-    json.dump(birthdays, f)
+with open("birthdays.json", "r") as f:
+    birthdays = json.load(f)
+
+
+while True:
+    inquiry = input("Enter a name: ").title()
+
+    key_list = list(birthdays.keys())
+
+    for key in key_list:
+        if inquiry not in key:
+            pass
+
+            if key == key_list[-1]:
+                addon = input(
+                    f"Sorry, {inquiry} isn't in this dictionary. Would you like to add a new entry? "
+                )
+
+                if addon.strip().lower() in ["y", "yes", "ok", "1", "true"]:
+                    name = input(f"What is {inquiry}'s full name? ").title()
+                    bday = input(f"What is {name}'s birthday? (Enter as: MM/DD/YYYY) ")
+                    birthdays[name] = bday
+
+                    with open("birthdays.json", "w") as f:
+                        json.dump(birthdays, f)
+
+                    print(f"{name}'s birthday was successfully added.")
+                    break
+
+                else:
+                    break
+
+        else:
+            print(f"{key}'s birthday is {birthdays[key]}")
+            break

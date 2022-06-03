@@ -2,19 +2,32 @@
 # their name. Create a dictionary (in your file) of names and birthdays. When you run your program it should ask the user
 # to enter a name, and return the birthday of that person back to them.
 
+import json
+
 birthdays = {
-    "Chloe": "March 31, 1990",
-    "Stephen": "December 31, 1985",
-    "Pippin J. Marshmallow Bird": "October 24, 2018",
-    "Kalos P. Grumpy Bird": "June 15, 2009",
-    "Buena 'B'" : "June 29, 2009",
-    "Famous Bid": "March 29, 1999",
-    "Silver": "January 22, 2008",
+    "Chloe": "03/31/1990",
+    "Stephen": "12/31/1985",
+    "Pippin J. Marshmallow Bird": "10/24/2018",
+    "Kalos P. Grumpy Bird": "06/15/2009",
+    "Buena 'B'": "06/29/2009",
+    "Famous Bid": "03/29/1999",
+    "Silver": "01/22/2008",
 }
 
-inquiry = input("Enter a name: ").title()
+with open("birthdays.json", "w") as f:
+    json.dump(birthdays, f)
 
-key_list = list(birthdays.keys())
-for key in key_list:
-    if inquiry in key:
-        print(f"{key}'s birthday is {birthdays[key]}")
+
+while True:
+    inquiry = input("Enter a name: ").title()
+
+    key_list = list(birthdays.keys())
+
+    for key in key_list:
+        if inquiry not in key:
+            pass
+            if key == key_list[-1]:
+                print(f"Sorry, {inquiry} isn't in this dictionary.")
+        else:
+            print(f"{key}'s birthday is {birthdays[key]}")
+            break
