@@ -1,5 +1,7 @@
 # Tic tac toe, but against the computer.
 
+import random
+
 
 def reset(game, turns_taken, state):
     game.clear()
@@ -151,17 +153,32 @@ def get_computer(game, player_marks):
 
                 return coords
 
-    # place in centre or corners
+    # place in centre
     if game[1][1] == " ":
         coords = (2, 2)
         return coords
 
-    for key, value in game_tiles.items():
-        for i in range(len(value)):
-            if value[i] == " ":
-                coords = coords_tiles.get(key)[i]
+    # place randomly
+    while True:
 
-                return coords
+        key_list = coords_tiles.keys()
+        random_key = key_list[random.randint(0, len(key_list))]
+        r = random.randint(0, len(key_list))
+        tile = game_tiles.get(random_key)[r]
+
+        if tile == " ":
+            continue
+
+        else:
+            coords = coords_tiles.get(random_key)[r]
+            return coords
+
+    # for key, value in game_tiles.items():
+    #     for i in range(len(value)):
+    #         if value[i] == " ":
+    #             coords = coords_tiles.get(key)[i]
+
+    #             return coords
 
 
 def add_curr_turn(turns_taken, curr_player, coords):
