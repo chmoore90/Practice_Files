@@ -161,12 +161,12 @@ def get_computer(game, player_marks):
     # place randomly
     while True:
 
-        key_list = coords_tiles.keys()
-        random_key = key_list[random.randint(0, len(key_list))]
-        r = random.randint(0, len(key_list))
+        key_list = list(coords_tiles.keys())
+        random_key = key_list[random.randint(0, len(key_list)-1)]
+        r = random.randint(0, 2)
         tile = game_tiles.get(random_key)[r]
 
-        if tile == " ":
+        if tile != " ":
             continue
 
         else:
@@ -263,5 +263,6 @@ while True:
                 print(f"{computer} wins: {player_counts[computer]}")
                 exit()
 
-            print("Starting a new game. Loser gets to go first!")
+            print("Starting a new game. Good luck!")
             game, turns_taken, state = reset(game, turns_taken, state)
+            draw(turns_taken, game)
