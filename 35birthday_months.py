@@ -5,6 +5,7 @@
 
 import json
 from collections import Counter
+import calendar
 
 
 with open("birthdays.json", "r") as f:
@@ -12,4 +13,11 @@ with open("birthdays.json", "r") as f:
 
 months = []
 
-print(bdays)
+for value in bdays.values():
+    month_no = int(value.split("/")[0])
+    month = calendar.month_name[month_no]
+    months.append(month)
+
+month_count = Counter(months)
+
+print(month_count)
