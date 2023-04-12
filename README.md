@@ -1,4 +1,3 @@
-# Python Practice
+# Practice Files
 
-Pretty self explanatory.
-https://www.practicepython.org/
+Repo for tutorials and other files from learning new things.
